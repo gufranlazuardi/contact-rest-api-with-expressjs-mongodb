@@ -1,6 +1,10 @@
 const express = require("express");
 const errorHandler = require("./middleware/errorHandler");
+const connectDb = require("./config/dbConnection");
 const env = require("dotenv").config();
+
+// call the database connection from mongoDB
+connectDb();
 
 const app = express();
 
