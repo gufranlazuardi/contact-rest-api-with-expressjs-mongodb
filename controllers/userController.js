@@ -78,10 +78,10 @@ const loginUser = asyncHandler(async (req, res) => {
 
 //@desc current user info
 //@route POST /api/users/current
-//@access public
+//@access private
 
 const currentUser = asyncHandler(async (req, res) => {
-    res.json({ message: "Login the user" });
+    res.json(req.user);
 });
 
 module.exports = { registerUser, loginUser, currentUser };
