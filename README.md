@@ -28,5 +28,5 @@ Create a .env file in the root directory and add your configuration settings.
 4. **Start the Server:**
 
 ```bash
-  npm start
+  npm run dev
 ```
