@@ -59,6 +59,14 @@ const updateContact = asyncHandler(async (req, res) => {
         throw new Error("Contact not found");
     }
 
+    // user only can update their own contact
+    if (contacts.user_id.toString() !== req.user.id) {
+        res.status(403);
+        throw new Error(
+            "User don't have permission to update other user contacts"
+        );
+    }
+
     const updatedContact = await Contact.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -81,11 +89,19 @@ const deleteContact = asyncHandler(async (req, res) => {
         throw new Error("Contact not found");
     }
 
+    // user only can delete their own contact
+    if (contact.user_id.toString() !== req.user.id) {
+        res.status(403);
+        throw new Error(
+            "User don't have permission to delete other user contacts"
+        );
+    }
+
     // Delete the contact
-    await Contact.findByIdAndDelete(req.params.id);
+    await Contact.deleteOne({ _id: req.params.id });
 
     // Send a success response
-    res.status(200).json({ message: "Contact deleted successfully" });
+    res.status(200).json(contact);
 });
 
 module.exports = {
